@@ -10,12 +10,13 @@
 #define HEIGHT 25
 #define MAX_LENGTH 500 //change later on
 
-#define FOOD '*' //$$(BUG: cant set any other ascii symbol)$$
-#define HEAD '@'
-#define BODY 'o'
+#define FOOD "*"
+#define HEAD "@"
+#define BODY "o"
 
 int SnakeX[MAX_LENGTH];
 int SnakeY[MAX_LENGTH];
+char Grid[HEIGHT][WIDTH];
 
 int snakeLength = 3;
 int direction; // 0=N,1=E,2=S,3=W
@@ -50,6 +51,8 @@ void GoToXY(int x,int y) {
 }
 void draw(void){
     GoToXY(0, 0); //Flicker free game
+    memset(Grid, 0, sizeof(Grid));
+    for (int i = 0;i < snakeLength;i++) Grid[SnakeY[i]][SnakeX[i]] = (i == 0) ? 1 : 2;
     for (int row=0;row < HEIGHT;row++) {
         for (int col=0;col < WIDTH;col++) {
             if (row == 0 && col == 0) printf("╔");
@@ -58,20 +61,10 @@ void draw(void){
             else if (row == HEIGHT - 1 && col == WIDTH - 1) printf("╝");
             else if (row == 0 || row == HEIGHT - 1) printf("═");
             else if (col == 0 || col == WIDTH - 1) printf("║");
-            else if (row == FoodY && col == FoodX) printf("%c", FOOD);
-            else 
-            {
-                int printed = 0;
-                for (int i = 0;i < snakeLength;i++){
-                    if (row == SnakeY[i] && col == SnakeX[i]){
-                        if (i == 0) printf("%c",HEAD);
-                        else printf("%c",BODY);
-                        printed = 1;
-                        break;
-                    }
-                }
-                if (!printed) printf(" ");
-            }
+            else if (row == FoodY && col == FoodX) printf("%s", FOOD);
+            else if (Grid[row][col] == 1) printf("%s",HEAD);
+            else if (Grid[row][col] == 2) printf("%s",BODY);
+            else printf(" ");
         }
         printf("\n");
     }
@@ -115,7 +108,11 @@ int CheckCollision(void)  //RETURNS 0/1 for "IF" in MAIN
 void CheckFood(void){
     if (SnakeX[0] == FoodX && SnakeY[0] == FoodY){
         score = score + 10;
-        if (snakeLength < MAX_LENGTH - 1) snakeLength++; //Prevent buffer overflow
+        if (snakeLength < MAX_LENGTH - 1) {
+            SnakeX[snakeLength] = SnakeX[snakeLength - 1];
+            SnakeY[snakeLength] = SnakeY[snakeLength - 1];
+            snakeLength++; //Prevent buffer overflow
+        }
         generateFood();
         //Beep(1200, 25);
     }
