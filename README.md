@@ -28,7 +28,7 @@ We designed this project to be **Modular** from the start. Unlike a lot of spagh
 Since this code uses `<windows.h>`, it **only works on Windows**.
 
 **Option 1: The Easy Way (Recommended)**
-1.  Just download the `Snake_Renewed.exe` file from this repository.
+1.  Just download the `Snake_Renewed.exe` file from this repositories Releases tab.
 2.  Double-click to play! 🚀
 
 **Option 2: The Dev Way (VS Code)**
