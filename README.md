@@ -37,5 +37,5 @@ Since this code uses `<windows.h>`, it **only works on a Windows operating syste
 3.  Compile and run using the GCC compiler.
     *(Or if you like the terminal, just run: `gcc Snake_Renewed.c -o snake`)*
 ### 🧠 Credits
-* Logic and modular structure by us `[Faizan & Zain]`.
+* Logic and modular structure by us `[Me & Zain]`.
 * Cursor hiding & logic adapted from Stack Overflow (lifesaver).
